@@ -5,9 +5,7 @@ from django.contrib.auth.models import User
 from passenger.models import Passenger
 
 class Train(models.Model):
-    total_capacity = models.IntegerField(max_length=4)
-    remaining_capacity = models.IntegerField(max_length=4)
-    isfull = models.BooleanField(default=False)
+    total_capacity = models.IntegerField()
 
 class Station(models.Model):
     name = models.CharField(null=True, max_length=100)
@@ -19,9 +17,11 @@ class Trip(models.Model):
     start_time_date = models.DateTimeField()
     end_time_date = models.DateTimeField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    remaining_capacity = models.IntegerField(default=-1)
 
 class Ticket(models.Model):
-    ticket_id = models.CharField(max_length=8,primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usertickets', null=True)
+    number = models.CharField(max_length=8,primary_key=True,null=False,default=0)
     trip = models.ForeignKey(Trip, related_name="tickets", null=True, on_delete=models.CASCADE)
     passenger = models.ForeignKey(Passenger, related_name="passtick", null=True, on_delete=models.CASCADE)
     seat_number = models.CharField(null=True, max_length=8)
