@@ -17,7 +17,7 @@ class Trip(models.Model):
     start_time_date = models.DateTimeField()
     end_time_date = models.DateTimeField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    remaining_capacity = models.IntegerField(default=-1)
+    # remaining_capacity = models.IntegerField(default=-1)
 
 class Ticket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usertickets', null=True)
